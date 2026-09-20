@@ -136,7 +136,8 @@
     }
 
     &:hover::after,
-    &:focus-visible::after {
+    &:focus-visible::after,
+    &--active::after {
       transform: scaleX(1);
     }
 

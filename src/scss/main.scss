@@ -8,6 +8,8 @@
 @use 'components/coffee';
 @use 'components/slider';
 @use 'components/favorite';
+@use 'components/card';
+@use 'components/catalog';
 @use 'components/about';
 @use 'components/store';
 @use 'components/app';
@@ -20,6 +22,10 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   font-family: $font-family;
   color: var(--text-primary);
@@ -27,7 +33,14 @@ body {
 }
 
 // Vertical rhythm between the page sections (Figma: 100px)
+// The footer sticks to the bottom edge even when the page has little content
+.header,
+.contacts {
+  width: 100%;
+}
+
 .main {
+  flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   gap: 100px;

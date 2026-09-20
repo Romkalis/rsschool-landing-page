@@ -29,3 +29,16 @@ $vw-desktop: 1440;
   @include fluid-desktop($property, $tablet, $desktop);
   @include fluid-burger($property, $mobile, $tablet);
 }
+
+// Hidden visually, but available for screen readers
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+  border: 0;
+}
