@@ -1,0 +1,276 @@
+@use '../mixins' as *;
+@use '../functions' as *;
+
+// Header
+.header {
+  padding-top: rem(20);
+
+  &__container {
+    display: flex;
+    align-items: center;
+    max-width: rem(1440);
+    margin: 0 auto;
+    @include fluid(padding-inline, 16, 40, 40);
+
+    @include burger-view {
+      flex-wrap: wrap;
+    }
+  }
+
+  &__logo {
+    order: 1;
+    display: block;
+    flex-shrink: 0;
+    width: rem(100);
+    aspect-ratio: 100 / 60;
+  }
+
+  &__logo-img {
+    display: block;
+    width: 100%;
+    height: auto;
+
+    // The logo is swapped by theme
+    &--dark {
+      display: none;
+    }
+  }
+
+  // On desktop the wrapper is transparent: nav and menu link are laid out by the container
+  &__menu {
+    display: contents;
+
+    @include burger-view {
+      display: none;
+      order: 3;
+      flex-direction: column;
+      width: 100%;
+      @include fluid-burger(gap, 100, 100);
+      @include fluid-burger(padding-block, 60, 60);
+    }
+  }
+
+  &__nav {
+    order: 2;
+    flex: 1;
+  }
+
+  &__actions {
+    order: 3;
+    display: flex;
+    align-items: center;
+    @include fluid-desktop(gap, 12, 24);
+
+    @include burger-view {
+      order: 2;
+      margin-left: auto;
+      @include fluid-burger(gap, 12, 12);
+    }
+  }
+
+  &__menu-link {
+    order: 4;
+    @include fluid-desktop(margin-left, 12, 24);
+
+    @include burger-view {
+      order: 0;
+      margin-left: 0;
+      justify-content: center;
+    }
+  }
+
+  // Opened burger menu: header turns into a full-screen panel
+  &--open {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    overflow-y: auto;
+    background-color: var(--bg-page);
+  }
+
+  &--open &__menu {
+    @include burger-view {
+      display: flex;
+    }
+  }
+}
+
+// Navigation links
+.nav {
+  &__list {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    @include fluid-desktop(gap, 16, 40);
+
+    @include burger-view {
+      flex-direction: column;
+      @include fluid-burger(gap, 60, 60);
+    }
+  }
+
+  &__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: rem(8);
+    padding-bottom: rem(4);
+    font-size: rem(16);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text-primary);
+    text-decoration: none;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background-color: currentColor;
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    &:hover::after,
+    &:focus-visible::after {
+      transform: scaleX(1);
+    }
+
+    @include burger-view {
+      @include fluid-burger(font-size, 32, 32);
+      line-height: 1.25;
+    }
+  }
+
+  &__list &__link {
+    @include burger-view {
+      display: block;
+      text-align: center;
+    }
+  }
+
+  &__item {
+    @include burger-view {
+      text-align: center;
+    }
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    width: rem(20);
+    aspect-ratio: 1;
+    height: auto;
+
+    @include burger-view {
+      width: rem(40);
+    }
+  }
+}
+
+// Light / dark theme switch
+.theme-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(8);
+  width: rem(88);
+  aspect-ratio: 2 / 1;
+  border: 1px solid var(--border-primary);
+  border-radius: 100vmax;
+
+  @include burger-view {
+    width: rem(104);
+    gap: 0;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(36);
+    aspect-ratio: 1;
+    padding: 0;
+    color: var(--text-primary);
+    background: none;
+    border: 0;
+    border-radius: 100vmax;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+
+    @include burger-view {
+      width: rem(44);
+      aspect-ratio: 11 / 10;
+    }
+
+    &--active {
+      color: var(--bg-page);
+      background-color: var(--text-accent);
+    }
+  }
+
+  &__icon {
+    width: 66%;
+    aspect-ratio: 1;
+    height: auto;
+  }
+}
+
+// Burger button (turns into a cross when the menu is open)
+.burger {
+  display: none;
+  position: relative;
+  width: rem(44);
+  aspect-ratio: 1;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--border-inverse);
+  border-radius: 50%;
+  cursor: pointer;
+
+  @include burger-view {
+    display: block;
+  }
+
+  &__line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 36%;
+    height: 1.5px;
+    background-color: var(--text-primary);
+    border-radius: 1px;
+    transition: transform 0.3s;
+
+    &:first-child {
+      transform: translate(-50%, -4px);
+    }
+
+    &:last-child {
+      transform: translate(-50%, 3px);
+    }
+  }
+
+  &[aria-expanded='true'] &__line {
+    &:first-child {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &:last-child {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+  }
+}
+
+:root[data-theme='dark'] {
+  .header__logo-img--light {
+    display: none;
+  }
+
+  .header__logo-img--dark {
+    display: block;
+  }
+}

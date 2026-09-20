@@ -1,0 +1,17 @@
+@use 'variables' as *;
+@use 'fonts';
+@use 'theme';
+@use 'components/header';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: $font-family;
+  color: var(--text-primary);
+  background: var(--bg-page);
+}
