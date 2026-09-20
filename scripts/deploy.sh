@@ -15,6 +15,7 @@ cd "$tmp"
 git init -q -b gh-pages
 git add -A
 git commit -q -m "deploy: $(date -u +%Y-%m-%dT%H:%MZ)"
-git push -f "$remote" gh-pages
+# The bundled images exceed the default http buffer
+git -c http.postBuffer=524288000 push -f "$remote" gh-pages
 
 rm -rf "$tmp"
