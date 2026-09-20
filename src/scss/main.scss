@@ -4,6 +4,11 @@
 @use 'components/header';
 @use 'components/button';
 @use 'components/hero';
+@use 'components/title';
+@use 'components/about';
+@use 'components/store';
+@use 'components/app';
+@use 'components/contacts';
 
 *,
 *::before,
@@ -16,4 +21,20 @@ body {
   font-family: $font-family;
   color: var(--text-primary);
   background: var(--bg-page);
+}
+
+// Vertical rhythm between the page sections (Figma: 100px)
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  margin-bottom: 100px;
+
+  > * {
+    width: 100%;
+  }
+}
+
+body {
+  padding-bottom: 40px;
 }

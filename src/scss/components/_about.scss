@@ -1,0 +1,62 @@
+@use '../mixins' as *;
+@use '../functions' as *;
+
+.about {
+  max-width: rem(1440);
+  margin: 0 auto;
+  @include fluid(padding-inline, 16, 40, 40);
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: rem(40);
+  }
+
+  &__images {
+    display: flex;
+    gap: rem(40);
+
+    @include burger-view {
+      flex-direction: column;
+    }
+  }
+
+  &__column {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: rem(40);
+    min-width: 0;
+
+    @include burger-view {
+      display: contents;
+    }
+  }
+
+  &__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: rem(20);
+
+    // Figma: 660x590 and 660x430 on desktop
+    &--tall {
+      aspect-ratio: 660 / 590;
+    }
+
+    &--short {
+      aspect-ratio: 660 / 430;
+    }
+
+    // Tablet and mobile show two photos with a height of 600px and 590px
+    @include burger-view {
+      aspect-ratio: auto;
+      @include fluid-burger(height, 590, 600);
+
+      &--desktop-only {
+        display: none;
+      }
+    }
+  }
+}
