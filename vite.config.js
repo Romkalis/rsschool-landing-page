@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+import { convertToWebp } from './plugins/convert-to-webp.js';
 
 export default defineConfig({
   root: 'src',
@@ -16,13 +17,12 @@ export default defineConfig({
     },
   },
   plugins: [
+    // Raster images (jpg, png) are converted to webp by convertToWebp, the optimizer handles svg
     ViteImageOptimizer({
-      png: { quality: 80 },
-      jpeg: { quality: 80 },
-      jpg: { quality: 80 },
-      webp: { quality: 80 },
-      avif: { quality: 70 },
+      test: /\.svg$/i,
       svg: { multipass: true },
     }),
+    // Every image is at most 120 KB: the quality is lowered, then the image is scaled down
+    convertToWebp({ quality: 80, maxSize: 120 * 1024 }),
   ],
 });
