@@ -2,7 +2,6 @@
 @use '../functions' as *;
 
 // Slider: one slide is visible, the track moves with a smooth animation.
-// The first and the last slides are cloned in JS to make the scroll endless.
 .slider {
   display: flex;
   flex-direction: column;
@@ -30,8 +29,6 @@
     flex: 1;
     min-width: 0;
     overflow: hidden;
-    // Vertical page scroll stays native, horizontal swipes are handled in JS
-    touch-action: pan-y;
   }
 
   &__track {
@@ -39,13 +36,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    transform: translateX(calc(var(--slider-index, 1) * -100% + var(--slider-drag, 0px)));
     transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
-
-    // No animation while dragging and while jumping over a clone
-    &--still {
-      transition: none;
-    }
 
     @media (prefers-reduced-motion: reduce) {
       transition: none;
