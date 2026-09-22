@@ -4,18 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="./assets/coffee-cup-CiwzkYzy.svg" />
-    <script>
-      // Sets the saved theme before the first paint, otherwise the light theme flashes on every page load.
-      // Keep in sync with the theme logic in js/header.js
-      (function () {
-        var theme = null;
-        try {
-          theme = localStorage.getItem('theme');
-        } catch (e) {}
-        if (!theme) theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        document.documentElement.dataset.theme = theme;
-      })();
-    </script>
     <title>Catalog – Resource Coffee House</title>
     <script type="module" crossorigin src="./assets/main-DCRskL_Y.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/main-CsH3f496.css">
