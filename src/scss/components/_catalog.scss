@@ -1,0 +1,180 @@
+@use '../mixins' as *;
+@use '../functions' as *;
+
+// 3D hover animation of the cards. The card that comes closer takes 0.3s, the other cards
+// take twice as long to move away. The animation starts 0.2s after the hover.
+// The easing has a bounce (overshoot at the end).
+$card-approach-duration: 0.3s;
+$card-recede-duration: $card-approach-duration * 2;
+$card-hover-delay: 0.2s;
+$card-hover-easing: cubic-bezier(0.34, 1.56, 0.64, 1);
+$card-perspective: 600px;
+$card-depth: 60px;
+$card-tilt: 5deg;
+
+.catalog {
+  max-width: rem(1440);
+  margin: 0 auto;
+  padding-top: rem(12);
+  @include fluid(padding-inline, 16, 40, 40);
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: rem(40);
+  }
+
+  &__title {
+    max-width: rem(800);
+    text-align: center;
+  }
+
+  // Category switch
+  &__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: rem(12);
+  }
+
+  &__tab {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(8);
+    padding: rem(10) rem(20) rem(10) rem(10);
+    font-family: inherit;
+    font-size: rem(16);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text-primary);
+    cursor: pointer;
+    background: none;
+    border: 1px solid var(--border-primary);
+    border-radius: 100vmax;
+    transition:
+      color 0.3s,
+      background-color 0.3s;
+
+    &--active {
+      color: var(--text-inverse);
+      background-color: var(--bg-container);
+      border-color: var(--bg-container);
+    }
+  }
+
+  &__tab-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(26);
+    aspect-ratio: 1;
+    font-size: rem(14);
+    line-height: 1;
+    background-color: var(--border-primary);
+    border-radius: 50%;
+  }
+
+  // Lists of the categories go one after another, each has its own list
+  &__sections {
+    display: flex;
+    flex-direction: column;
+    gap: rem(40);
+    width: 100%;
+  }
+
+  &__section-title {
+    @include visually-hidden;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, rem(310));
+    gap: rem(40);
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // The card can be opened from the link on the main page, the header does not cover it
+  &__item {
+    scroll-margin-top: rem(120);
+
+    &:target .card {
+      border-color: var(--text-accent);
+    }
+  }
+
+  // 3D hover.
+  // The list is hovered: all its cards move away in depth and lean back by 5deg around the
+  // horizontal axis. A card is hovered: it comes closer and gets a shadow, the other cards
+  // of the list become more transparent. Every card has its own perspective, so it changes
+  // its size in place and does not cover its neighbours.
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    &__item {
+      position: relative;
+      transform: perspective($card-perspective) translateZ(0) rotateX(0);
+      transition:
+        transform $card-approach-duration $card-hover-easing,
+        opacity $card-approach-duration ease;
+      will-change: transform;
+
+      .card {
+        transition: box-shadow $card-approach-duration ease;
+      }
+    }
+
+    &__list:hover &__item {
+      transform: perspective($card-perspective) translateZ(-$card-depth) rotateX($card-tilt);
+      transition:
+        transform $card-recede-duration $card-hover-easing $card-hover-delay,
+        opacity $card-recede-duration ease $card-hover-delay;
+    }
+
+    &__list:has(&__item:hover) &__item:not(:hover) {
+      opacity: 0.7;
+    }
+
+    &__list:hover &__item:hover {
+      z-index: 1;
+      transform: perspective($card-perspective) translateZ($card-depth) rotateX(0);
+      transition:
+        transform $card-approach-duration $card-hover-easing $card-hover-delay,
+        opacity $card-approach-duration ease $card-hover-delay;
+
+      .card {
+        box-shadow: 0 rem(24) rem(48) rgb(0 0 0 / 30%);
+        transition: box-shadow $card-approach-duration ease $card-hover-delay;
+      }
+    }
+  }
+
+  // "Show more" button of the tablet and mobile layouts
+  &__more {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: rem(48);
+    aspect-ratio: 1;
+    padding: 0;
+    color: var(--text-primary);
+    cursor: pointer;
+    background: none;
+    border: 1px solid var(--border-inverse);
+    border-radius: 50%;
+    transition:
+      color 0.3s,
+      background-color 0.3s;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--bg-page);
+      background-color: var(--text-primary);
+    }
+
+    @include burger-view {
+      display: flex;
+    }
+  }
+}
