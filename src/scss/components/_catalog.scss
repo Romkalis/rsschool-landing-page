@@ -1,9 +1,6 @@
 @use '../mixins' as *;
 @use '../functions' as *;
 
-// 3D hover animation of the cards. The card that comes closer takes 0.3s, the other cards
-// take twice as long to move away. The animation starts 0.2s after the hover.
-// The easing has a bounce (overshoot at the end).
 $card-approach-duration: 0.3s;
 $card-recede-duration: $card-approach-duration * 2;
 $card-hover-delay: 0.2s;
@@ -73,10 +70,10 @@ $card-tilt: 5deg;
     line-height: 1;
     background-color: var(--border-primary);
     border-radius: 50%;
+    pointer-events: none;
   }
 
-  // Lists of the categories go one after another, each has its own list
-  &__sections {
+  &__section {
     display: flex;
     flex-direction: column;
     gap: rem(40);
@@ -97,20 +94,22 @@ $card-tilt: 5deg;
     list-style: none;
   }
 
-  // The card can be opened from the link on the main page, the header does not cover it
+  // Mobile: only the first 4 cards until "Show more" is pressed
+  &__list--collapsed &__item:nth-child(n + 5) {
+    @include burger-view {
+      display: none;
+    }
+  }
+
   &__item {
     scroll-margin-top: rem(120);
+    cursor: pointer;
 
     &:target .card {
       border-color: var(--text-accent);
     }
   }
 
-  // 3D hover.
-  // The list is hovered: all its cards move away in depth and lean back by 5deg around the
-  // horizontal axis. A card is hovered: it comes closer and gets a shadow, the other cards
-  // of the list become more transparent. Every card has its own perspective, so it changes
-  // its size in place and does not cover its neighbours.
   @media (hover: hover) and (prefers-reduced-motion: no-preference) {
     &__item {
       position: relative;
@@ -150,7 +149,6 @@ $card-tilt: 5deg;
     }
   }
 
-  // "Show more" button of the tablet and mobile layouts
   &__more {
     display: none;
     align-items: center;
@@ -175,6 +173,10 @@ $card-tilt: 5deg;
 
     @include burger-view {
       display: flex;
+    }
+
+    &[hidden] {
+      display: none;
     }
   }
 }
