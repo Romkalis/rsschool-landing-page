@@ -1,0 +1,169 @@
+@use '../functions' as *;
+
+// Product modal: photo on the left, name, options, total price and "Close" button on the right
+.modal {
+  width: min(rem(800), 100% - rem(32));
+  max-height: calc(100dvh - rem(32));
+  padding: 0;
+  color: var(--text-primary);
+  background-color: var(--bg-page);
+  border: 0;
+  border-radius: rem(40);
+
+  &::backdrop {
+    background-color: rgb(64 63 61 / 80%);
+  }
+
+  &__content {
+    display: flex;
+    gap: rem(20);
+    padding: rem(16);
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+  }
+
+  &__image {
+    flex-shrink: 0;
+    width: rem(310);
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: rem(40);
+
+    @media (max-width: 600px) {
+      align-self: center;
+    }
+  }
+
+  &__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: rem(20);
+    min-width: 0;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: rem(12);
+  }
+
+  &__name {
+    margin: 0;
+    font-size: rem(24);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  &__text,
+  &__label {
+    margin: 0;
+    font-size: rem(16);
+    line-height: 1.5;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: rem(8);
+  }
+
+  &__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: rem(8);
+  }
+
+  &__option {
+    display: inline-flex;
+    align-items: center;
+    gap: rem(8);
+    padding: rem(8) rem(16) rem(8) rem(8);
+    font-family: inherit;
+    font-size: rem(16);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text-primary);
+    cursor: pointer;
+    background: none;
+    border: 1px solid var(--border-primary);
+    border-radius: 100vmax;
+
+    &--active {
+      color: var(--text-inverse);
+      background-color: var(--bg-container);
+      border-color: var(--bg-container);
+    }
+  }
+
+  &__option-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: rem(30);
+    aspect-ratio: 1;
+    color: var(--text-primary);
+    background-color: var(--border-primary);
+    border-radius: 50%;
+  }
+
+  &__option--active &__option-icon {
+    background-color: var(--bg-page);
+  }
+
+  &__total {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    font-size: rem(24);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  &__alert {
+    display: flex;
+    gap: rem(8);
+    margin: 0;
+    padding-top: rem(12);
+    font-size: rem(10);
+    font-weight: 600;
+    line-height: 1.4;
+    border-top: 1px solid var(--border-primary);
+  }
+
+  &__alert-icon {
+    flex-shrink: 0;
+  }
+
+  &__close {
+    width: 100%;
+    padding: rem(10);
+    font-family: inherit;
+    font-size: rem(16);
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text-primary);
+    cursor: pointer;
+    background: none;
+    border: 1px solid var(--border-inverse);
+    border-radius: 100vmax;
+    transition:
+      color 0.3s,
+      background-color 0.3s;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--bg-page);
+      background-color: var(--text-primary);
+    }
+  }
+}
+
+// The page under the open modal does not scroll
+body:has(.modal[open]) {
+  overflow: hidden;
+}
