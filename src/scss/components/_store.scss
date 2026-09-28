@@ -1,0 +1,44 @@
+@use '../functions' as *;
+
+// Link to an app store
+.store {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: rem(12);
+  width: rem(200);
+  height: rem(64);
+  color: var(--text-primary);
+  text-decoration: none;
+  border: 1px solid var(--border-inverse);
+  border-radius: 100vmax;
+  transition: opacity 0.3s;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 0.7;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    width: rem(32);
+    aspect-ratio: 1;
+    height: auto;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+  }
+
+  &__label {
+    font-size: rem(12);
+    font-weight: 500;
+  }
+
+  &__name {
+    font-size: rem(16);
+    font-weight: 600;
+  }
+}

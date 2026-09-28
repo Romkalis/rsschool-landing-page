@@ -1,0 +1,56 @@
+@use 'variables' as *;
+@use 'fonts';
+@use 'theme';
+@use 'components/header';
+@use 'components/button';
+@use 'components/hero';
+@use 'components/title';
+@use 'components/coffee';
+@use 'components/slider';
+@use 'components/favorite';
+@use 'components/card';
+@use 'components/catalog';
+@use 'components/about';
+@use 'components/store';
+@use 'components/app';
+@use 'components/contacts';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  font-family: $font-family;
+  color: var(--text-primary);
+  background: var(--bg-page);
+}
+
+// Vertical rhythm between the page sections (Figma: 100px)
+// The footer sticks to the bottom edge even when the page has little content
+.header,
+.contacts {
+  width: 100%;
+}
+
+.main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  margin-bottom: 100px;
+
+  > * {
+    width: 100%;
+  }
+}
+
+body {
+  padding-bottom: 40px;
+}

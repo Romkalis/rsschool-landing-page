@@ -1,0 +1,23 @@
+@use 'variables' as *;
+
+:root {
+  --text-primary: #{$text-primary};
+  --text-inverse: #{$text-inverse};
+  --text-accent: #{$text-accent};
+  --bg-page: #{$bg-page};
+  --bg-container: #{$bg-container};
+  --bg-overlay: #{$bg-overlay};
+  --border-primary: #{$border-primary};
+  --border-inverse: #{$border-inverse};
+}
+
+:root[data-theme='dark'] {
+  --text-primary: #{$dark-text-primary};
+  --text-inverse: #{$dark-text-inverse};
+  --text-accent: #{$dark-text-accent};
+  --bg-page: #{$dark-bg-page};
+  --bg-container: #{$dark-bg-container};
+  --bg-overlay: #{$dark-bg-overlay};
+  --border-primary: #{$dark-border-primary};
+  --border-inverse: #{$dark-border-inverse};
+}

@@ -1,0 +1,26 @@
+@use 'sass:math';
+@use '../mixins' as *;
+@use '../functions' as *;
+
+// Section heading: 56px / 76px on tablet and desktop, 32px / 40px on mobile
+.title {
+  margin: 0;
+  font-size: rem(56);
+  font-weight: 600;
+  line-height: math.div(76, 56);
+  color: var(--text-primary);
+  @include fluid-burger(font-size, 32, 56);
+
+  @include burger-view {
+    line-height: 1.25;
+  }
+
+  &--inverse {
+    color: var(--text-inverse);
+  }
+
+  &__accent {
+    font-style: italic;
+    color: var(--text-accent);
+  }
+}

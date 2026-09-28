@@ -1,0 +1,44 @@
+@use 'functions' as *;
+
+// Design widths from the Figma layouts
+$vw-mobile: 380;
+$vw-tablet: 768;
+$vw-desktop: 1440;
+
+// Burger menu is used up to (and including) tablet width
+@mixin burger-view {
+  @media (max-width: #{$vw-tablet}px) {
+    @content;
+  }
+}
+
+// Desktop view: value scales from its tablet size (768px) to its desktop size (1440px)
+@mixin fluid-desktop($property, $tablet, $desktop) {
+  #{$property}: fluid($tablet, $desktop, $vw-tablet, $vw-desktop);
+}
+
+// Burger view: value scales from its mobile size (380px) to its tablet size (768px)
+@mixin fluid-burger($property, $mobile, $tablet) {
+  @include burger-view {
+    #{$property}: fluid($mobile, $tablet, $vw-mobile, $vw-tablet);
+  }
+}
+
+// Value that has a size at each of the three design widths
+@mixin fluid($property, $mobile, $tablet, $desktop) {
+  @include fluid-desktop($property, $tablet, $desktop);
+  @include fluid-burger($property, $mobile, $tablet);
+}
+
+// Hidden visually, but available for screen readers
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+  border: 0;
+}

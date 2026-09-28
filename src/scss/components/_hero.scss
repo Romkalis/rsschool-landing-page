@@ -1,0 +1,54 @@
+@use '../mixins' as *;
+@use '../functions' as *;
+
+.hero {
+  max-width: rem(1440);
+  margin: 0 auto;
+  padding-top: rem(12);
+  @include fluid(padding-inline, 16, 40, 40);
+
+  &__container {
+    display: flex;
+    align-items: center;
+    // Figma: hero is 644px tall on desktop and tablet, 552px on mobile
+    @include fluid(min-height, 552, 644, 644);
+    @include fluid(padding-block, 60, 100, 100);
+    @include fluid(padding-inline, 16, 60, 100);
+    overflow: hidden;
+    background:
+      linear-gradient(90deg, rgb(0 0 0 / 60%), rgb(0 0 0 / 0%) 70%),
+      url('../../assets/images/hero-1.jpg') center / cover no-repeat;
+    border-radius: rem(40);
+  }
+
+  &__offer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    max-width: rem(530);
+    gap: rem(40);
+  }
+
+  &__title {
+    margin: 0;
+    // Figma: 64px / 76px on desktop, scales down on smaller screens
+    @include fluid(font-size, 40, 56, 64);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--text-inverse);
+  }
+
+  &__title-accent {
+    color: var(--text-accent);
+    font-style: italic;
+  }
+
+  &__text {
+    margin: 0;
+    font-size: rem(16);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-inverse);
+  }
+}

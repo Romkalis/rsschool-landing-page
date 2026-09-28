@@ -1,0 +1,120 @@
+@use '../mixins' as *;
+@use '../functions' as *;
+
+// Slider: one slide is visible, the track moves with a smooth animation.
+.slider {
+  display: flex;
+  flex-direction: column;
+  gap: rem(40);
+  width: 100%;
+  // Height of the drink photo: 460px on desktop and tablet, 345px on mobile
+  --slider-image-height: #{rem(460)};
+
+  @include burger-view {
+    --slider-image-height: #{fluid(345, 460, $vw-mobile, $vw-tablet)};
+  }
+
+  &__body {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: rem(44);
+
+    @include burger-view {
+      gap: 0;
+    }
+  }
+
+  &__viewport {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  &__track {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  &__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+  }
+
+  &__arrow {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: rem(60);
+    aspect-ratio: 1;
+    padding: 0;
+    color: var(--text-primary);
+    cursor: pointer;
+    background: none;
+    border: 1px solid var(--border-inverse);
+    border-radius: 50%;
+    transition:
+      color 0.3s,
+      background-color 0.3s;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--bg-page);
+      background-color: var(--text-primary);
+    }
+
+    // On tablet and mobile the arrows lie over the edges of the drink photo
+    @include burger-view {
+      position: absolute;
+      top: calc(var(--slider-image-height) / 2);
+      z-index: 1;
+      transform: translateY(-50%);
+      @include fluid-burger(width, 40, 60);
+
+      &--prev {
+        left: 0;
+      }
+
+      &--next {
+        right: 0;
+      }
+    }
+  }
+
+  &__dots {
+    display: flex;
+    justify-content: center;
+    gap: rem(12);
+  }
+
+  &__dot {
+    position: relative;
+    width: rem(40);
+    height: rem(4);
+    padding: 0;
+    cursor: pointer;
+    background-color: var(--border-primary);
+    border: 0;
+    border-radius: 100vmax;
+    transition: background-color 0.3s;
+
+    // Bigger hit area than the 4px bar
+    &::before {
+      content: '';
+      position: absolute;
+      inset: rem(-12) 0;
+    }
+
+    &--active {
+      background-color: var(--text-primary);
+    }
+  }
+}
