@@ -3,7 +3,7 @@
     const VISIBLE_CARDS_ON_MOBILE = 4;
 
     export function formatPrice(price) {
-      return `$${price.toFixed(2)}`;
+      return `$${Number(price).toFixed(2)}`;
     }
 
     export function createCard({ id, name, description, price, image, alt }) {
